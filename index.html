@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <br>
+  <title>Image to PDF Converter with Preview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f2027;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #00c6ff;
+    }
+
+    .converter {
+      background: #16222a;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
+      text-align: center;
+    }
+
+    input {
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #00c6ff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #0072ff;
+    }
+
+    .preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .preview-image {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin: 5px;
+      border-radius: 8px;
+    }
+
+    .progress-container {
+      margin-top: 20px;
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #progressBar {
+      width: 0%;
+      height: 20px;
+      background: #00c6ff;
+      border-radius: 5px;
+      transition: width 0.3s;
+    }
+
+    #progressText {
+      margin-top: 5px;
+      font-weight: bold;
+    }
+
+    #downloadBtn {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .gif-container {
+      margin-top: 20px;
+      display: none;
+    }
+
+    .truck-gif {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+    }
+    h3{
+
+      animation:textcolorchange 6s infinite;
+    }
+    @keyframes textcolorchange {
+      10%{color: rgb(28, 14, 233);}
+      20%{color: rgb(194, 181, 0);}
+      30%{color: rgb(10, 216, 45);}
+      40%{color: rgb(9, 255, 103);}
+      50%{color: rgb(64, 0, 240);}
+      60%{color: rgb(236, 0, 71);}
+      70%{color: rgb(17, 136, 247);}
+      80%{color: rgb(78, 0, 151);}
+      90%{color: rgb(2, 81, 92);}
+      100%{color: rgb(136, 5, 5);}
+      
+    }
+    /*                profile  */
+
+/* Container to hold profile image and icons */
+.container {
+  text-align: center;
+  position: relative;
+}
+
+/* Admin profile styles */
+.admin-profile {
+  margin-bottom: 30px;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid #333;
+  margin-bottom: 10px;
+}
+
+.typing-effect {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* Username display */
+.username-display {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+  margin-top: 20px;
+}
+
+/* Social Icons styles */
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  position: relative;
+  border-radius: 50%;
+  animation: bounceRotateScale 3s infinite ease-in-out;
+  transition: border 0.4s ease-in-out;
+  border: 3px solid transparent;
+  pointer-events: auto; /* Make sure hover effect works */
+}
+
+.icon img {
+  width: 240px;
+  height: 40px;
+  object-fit: contain;
+}
+
+
+
+/* Border animation on hover */
+.icon:hover {
+  border-color: #fff;
+ 
+}
+    /* Add some basic styles */
+    .verification-container, .recaptcha-container {
+      display: none;
+    }
+    .spinner {
+      border: 4px solid #f3f3f3; /* Light grey */
+      border-top: 4px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+  <br>
+  <br>
+ 
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="converter">
+    <input type="file" id="imageInput" accept="image/*" multiple>
+    <button id="convertBtn">Convert to PDF</button>
+    
+    <!-- Image Preview Section -->
+     <h2>THIS IS YOUR PREVIEW OF PDF BRO😁</h2>
+    <div class="preview-container" id="previewContainer"></div>
+
+    <div class="progress-container" id="progressContainer">
+      <div id="progressBar"></div>
+      <p id="progressText">0%</p>
+    </div>
+
+    <!-- Show GIF during progress -->
+    <div class="gif-container" id="gifContainer">
+      <img src="https://media1.tenor.com/m/gT0ql9EDWEsAAAAC/tejasswi-prakash-teja-kween.gif" alt="Truck Animation" class="truck-gif">
+    </div>
+
+    <button id="downloadBtn">Download PDF</button>
+  </div>
+  <br>
+  <h3>MORE INFORMATION AND JOIN OUR SOCIAL PLATFORMS</h3>
+<br>
+
+<h3>Image to PDF Converter with Preview</h3>
+<!--   profile-->
+
+
+<div class="container">
+  <!-- Admin profile and typing effect -->
+  <div class="admin-profile">
+    <img src="https://lh3.googleusercontent.com/a/ACg8ocK6JzV4rskY0NivhZKbyJUCb1MNTT1cEYYV05PxE9U-KH2YhMFT=s288-c-no" alt="Cyber Bro" class="profile-img">
+    <h3 class="typing-effect">Cyber Bro</h3>
+  </div>
+  
+  <!-- Social media icons -->
+  <div class="social-icons">
+    <a href="https://www.instagram.com/kgf_kgf_hack" target="_blank" class="icon instagram" data-username="kgf_kgf_hack">
+      <img src="https://cdn.dribbble.com/users/1938561/screenshots/6520651/ig.gif" alt="Instagram" />
+    </a>
+    <a href="https://www.youtube.com/@kgfhackers" target="_blank" class="icon youtube" data-username="kgfhackers">
+      <img src="https://i.makeagif.com/media/6-30-2022/fv0VOS.gif" alt="YouTube" />
+    </a>
+    <a href="https://t.me/kgfhackers" target="_blank" class="icon telegram" data-username="kgfhackers">
+      <img src="https://cdn.dribbble.com/userupload/10585826/file/original-c92e1bfe002f2ea8c95686719c2e5817.gif" alt="Telegram" />
+    </a>
+    <a href="mailto:kgfhackera@gmail.com" target="_blank" class="icon email" data-username="kgfhackera@gmail.com">
+      <img src="https://cdn-icons-gif.flaticon.com/8717/8717939.gif" alt="Email" />
+    </a>
+  </div>
+
+  <div class="username-display"></div>
+</div>
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script>
+    const { jsPDF } = window.jspdf;
+
+    document.getElementById("convertBtn").addEventListener("click", () => {
+      const input = document.getElementById("imageInput");
+      const files = input.files;
+      const previewContainer = document.getElementById("previewContainer");
+      
+      if (files.length === 0) {
+        alert("Please select images to convert!");
+        return;
+      }
+
+      const progressContainer = document.getElementById("progressContainer");
+      const progressBar = document.getElementById("progressBar");
+      const progressText = document.getElementById("progressText");
+      const downloadBtn = document.getElementById("downloadBtn");
+      const gifContainer = document.getElementById("gifContainer");
+
+      progressContainer.style.display = "block"; // Show progress container
+      gifContainer.style.display = "block"; // Show the gif container
+
+      // Clear preview container for new files
+      previewContainer.innerHTML = '';
+
+      let progress = 0;
+
+      // Animate progress bar from 0 to 100 in 10 seconds
+      const interval = setInterval(() => {
+        progress += 10;
+        progressBar.style.width = `${progress}%`;
+        progressText.innerText = `${progress}%`;
+
+        if (progress === 100) {
+          clearInterval(interval);
+          alert("Conversion Complete!");
+          downloadBtn.style.display = "block"; // Show download button
+          gifContainer.style.display = "none"; // Hide the gif after completion
+        }
+      }, 1000);
+
+      // Create a PDF with images
+      const pdf = new jsPDF();
+
+      // Loop through files and add images to the PDF
+      Array.from(files).forEach((file, index) => {
+        const reader = new FileReader();
+        
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            // Show preview of the image
+            const previewImg = document.createElement("img");
+            previewImg.src = e.target.result;
+            previewImg.classList.add("preview-image");
+            previewContainer.appendChild(previewImg);
+
+            if (index > 0) {
+              pdf.addPage();
+            }
+            pdf.addImage(img, 'JPEG', 10, 10, 180, 160);  // Adjust the width, height, and position as needed
+          };
+          img.src = e.target.result;
+        };
+        
+        reader.readAsDataURL(file);
+      });
+
+      // Trigger PDF download when clicked
+      downloadBtn.addEventListener("click", () => {
+        pdf.save("cyberbro.pdf");
+      });
+    });
+    //profile//
+    // JavaScript for voice alert, typing effect, and blur functionality
+let clickedIcon = null;
+
+document.querySelectorAll('.social-icons .icon').forEach(icon => {
+  icon.addEventListener('click', function () {
+    // Show the username of the clicked icon
+    const username = this.getAttribute('data-username');
+    document.querySelector('.username-display').textContent = `Username: ${username}`;
+
+    // Speak out the username
+    const voice = new SpeechSynthesisUtterance(`Cyber Bro. Username: ${username}`);
+    window.speechSynthesis.speak(voice);
+
+    // Only apply blur if no icon has been clicked yet
+    if (!clickedIcon) {
+      clickedIcon = this;  // Store the clicked icon for reference
+      // Blur all other icons
+      document.querySelectorAll('.social-icons .icon').forEach(icon => {
+        if (icon !== this) {
+          icon.style.filter = 'blur(5px)';
+          icon.style.pointerEvents = 'none'; // Disable hover and click for blurred icons
+        }
+      });
+    }
+
+    // Disable hover effect on clicked icon (no loop, it's a one-time effect)
+    this.style.pointerEvents = 'auto';
+  });
+});
+
+// Looping Typing effect for admin profile name
+const typingEffect = document.querySelector('.typing-effect');
+const text = typingEffect.textContent;
+typingEffect.textContent = '';
+let i = 0;
+
+function typeWriter() {
+  if (i < text.length) {
+    typingEffect.textContent += text.charAt(i);
+    i++;
+    setTimeout(typeWriter, 100);
+  } else {
+    // Reset typing effect after finishing
+    setTimeout(() => {
+      typingEffect.textContent = ''; // Clear text
+      i = 0; // Reset index
+      typeWriter(); // Start typing again
+    }, 1000); // Wait for 1 second before restarting
+  }
+}
+
+window.onload = () => typeWriter(); // Start typing effect when the page loads
+//recapcha//
+
+  </script>
+
+</html>
