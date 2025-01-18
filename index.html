@@ -255,18 +255,6 @@
   <div class="username-display"></div>
 </div>
 
-<!--recapcvha-->
-<div class="verification-container">
-  <div class="message">Verifying you are human. This may take a few seconds.</div>
-  <div class="spinner"></div>
-  <footer>Powered by cyberbrofooter>
-</div>
-<div class="recaptcha-container">
-  <div class="recaptcha">
-      <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" width="24" height="24">
-      <span>reCAPTCHA verification in progress...</span>
-  </div>
-</div>
 
 
 
@@ -398,17 +386,7 @@ function typeWriter() {
 
 window.onload = () => typeWriter(); // Start typing effect when the page loads
 //recapcha//
-   // Show reCAPTCHA after 10 seconds
-   setTimeout(() => {
-    document.querySelector('.verification-container').style.display = 'none';
-    document.querySelector('.recaptcha-container').style.display = 'block';
-}, 5000);
-
-// Automatically verify reCAPTCHA and show the welcome message after 5 seconds
-setTimeout(() => {
-    document.querySelector('.recaptcha-container').style.display = 'none';
-    document.querySelector('.welcome').style.display = 'block';
-}, 15000);
+ 
   </script>
 
 </html>
