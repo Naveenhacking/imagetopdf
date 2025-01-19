@@ -258,104 +258,103 @@
 
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script>
-  const { jsPDF } = window.jspdf;
+    const { jsPDF } = window.jspdf;
 
-document.getElementById("convertBtn").addEventListener("click", () => {
-  const input = document.getElementById("imageInput");
-  const files = input.files;
-  const previewContainer = document.getElementById("previewContainer");
-  
-  if (files.length === 0) {
-    alert("Please select images to convert!");
-    return;
-  }
-
-  const loader = document.getElementById("loader");
-  const progressContainer = document.getElementById("progressContainer");
-  const progressBar = document.getElementById("progressBar");
-  const progressText = document.getElementById("progressText");
-  const downloadBtn = document.getElementById("downloadBtn");
-
-  loader.style.display = "block";
-  progressContainer.style.display = "block";
-
-  // Clear preview container for new files
-  previewContainer.innerHTML = '';
-
-  let progress = 0;
-
-  const interval = setInterval(() => {
-    progress += 10;
-    progressBar.style.width = `${progress}%`;
-    progressText.innerText = `${progress}%`;
-
-    if (progress === 100) {
-      clearInterval(interval);
-      loader.style.display = "none";
-      alert("Conversion Complete!");
-      downloadBtn.style.display = "block";
-    }
-  }, 1000);
-
-  // Create a PDF with images
-  const pdf = new jsPDF();
-
-  // Loop through files and add images to the PDF
-  Array.from(files).forEach((file, index) => {
-    const reader = new FileReader();
+    document.getElementById("convertBtn").addEventListener("click", () => {
+      const input = document.getElementById("imageInput");
+      const files = input.files;
+      const previewContainer = document.getElementById("previewContainer");
+      
+      if (files.length === 0) {
+        alert("Please select images to convert!");
+        return;
+      }
     
-    reader.onload = function (e) {
-      const img = new Image();
-      img.onload = function () {
-        // Show preview of the image
-        const previewImg = document.createElement("img");
-        previewImg.src = e.target.result;
-        previewImg.classList.add("preview-image");
-        previewContainer.appendChild(previewImg);
-
-        // Set the background color for the page (optional)
-        pdf.setFillColor(255, 255, 255);  // White background (change the RGB values as needed)
-        pdf.rect(0, 0, 210, 297, 'F');  // Full-page rectangle to cover background (A4 size: 210x297 mm)
-
-        // Maintain aspect ratio for the image
-        const imgWidth = img.width;
-        const imgHeight = img.height;
-
-        const pageWidth = 210;  // A4 width in mm
-        const pageHeight = 297; // A4 height in mm
-        const maxWidth = 180;   // Maximum image width
-        const maxHeight = 160;  // Maximum image height
-
-        // Calculate aspect ratio
-        let width = maxWidth;
-        let height = (imgHeight / imgWidth) * width;
-
-        if (height > maxHeight) {
-          height = maxHeight;
-          width = (imgWidth / imgHeight) * height;
-        }
-
-        // Add image to PDF
-        if (index > 0) {
-          pdf.addPage();  // Add new page for subsequent images
-        }
-
-        pdf.addImage(img, 'JPEG', 10, 10, width, height); // Add image with aspect ratio maintained
-      };
-      img.src = e.target.result;
-    };
+      const loader = document.getElementById("loader");
+      const progressContainer = document.getElementById("progressContainer");
+      const progressBar = document.getElementById("progressBar");
+      const progressText = document.getElementById("progressText");
+      const downloadBtn = document.getElementById("downloadBtn");
     
-    reader.readAsDataURL(file);
-  });
-
-  // Trigger PDF download when clicked
-  downloadBtn.addEventListener("click", () => {
-    pdf.save("cyberbro.pdf");
-  });
-});
-
+      loader.style.display = "block";
+      progressContainer.style.display = "block";
+    
+      // Clear preview container for new files
+      previewContainer.innerHTML = '';
+    
+      let progress = 0;
+    
+      const interval = setInterval(() => {
+        progress += 10;
+        progressBar.style.width = `${progress}%`;
+        progressText.innerText = `${progress}%`;
+    
+        if (progress === 100) {
+          clearInterval(interval);
+          loader.style.display = "none";
+          alert("Conversion Complete!");
+          downloadBtn.style.display = "block";
+        }
+      }, 1000);
+    
+      // Create a PDF with images
+      const pdf = new jsPDF();
+    
+      // Loop through files and add images to the PDF
+      Array.from(files).forEach((file, index) => {
+        const reader = new FileReader();
+        
+        reader.onload = function (e) {
+          const img = new Image();
+          img.onload = function () {
+            // Show preview of the image
+            const previewImg = document.createElement("img");
+            previewImg.src = e.target.result;
+            previewImg.classList.add("preview-image");
+            previewContainer.appendChild(previewImg);
+    
+            // Set the background color for the page (optional)
+            pdf.setFillColor(255, 255, 255);  // White background (change the RGB values as needed)
+            pdf.rect(0, 0, 210, 297, 'F');  // Full-page rectangle to cover background (A4 size: 210x297 mm)
+    
+            // Maintain aspect ratio for the image
+            const imgWidth = img.width;
+            const imgHeight = img.height;
+    
+            const pageWidth = 210;  // A4 width in mm
+            const pageHeight = 297; // A4 height in mm
+            const maxWidth = 180;   // Maximum image width
+            const maxHeight = 160;  // Maximum image height
+    
+            // Calculate aspect ratio
+            let width = maxWidth;
+            let height = (imgHeight / imgWidth) * width;
+    
+            if (height > maxHeight) {
+              height = maxHeight;
+              width = (imgWidth / imgHeight) * height;
+            }
+    
+            // Add image to PDF
+            if (index > 0) {
+              pdf.addPage();  // Add new page for subsequent images
+            }
+    
+            pdf.addImage(img, 'JPEG', 10, 10, width, height); // Add image with aspect ratio maintained
+          };
+          img.src = e.target.result;
+        };
+        
+        reader.readAsDataURL(file);
+      });
+    
+      // Trigger PDF download when clicked
+      downloadBtn.addEventListener("click", () => {
+        pdf.save("cyberbro.pdf");
+      });
+    });
     //profile//
     // JavaScript for voice alert, typing effect, and blur functionality
 let clickedIcon = null;
