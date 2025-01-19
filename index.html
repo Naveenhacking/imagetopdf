@@ -191,13 +191,109 @@
   border-color: #fff;
  
 }
+/* Landing Page Styles */
+#landing-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://i.ibb.co/Yj9B56K/Kgf-4k-Rocky-In-Black-Wallpaper.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 1s;
+  z-index: 10;
+}
 
+#landing-page.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.typing-effect {
+  font-size: 2em;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: .1em solid white;
+  width: 0;
+  animation: typing 4s steps(40) 1s forwards, blink .75s step-end infinite;
+}
+
+.social-icons {
+  margin-top: 20px;
+}
+
+.social-icons img {
+  width: 40px;
+  margin: 0 10px;
+  transition: transform 0.3s;
+}
+
+.social-icons img:hover {
+  transform: scale(1.2);
+}
+
+/* Animation for text typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .social-icons img {
+    width: 30px;
+  }
+}
+.typing-effect {
+     color: #00c6ff;
+   
+}
   </style>
 </head>
 
   <br>
   <br>
- 
+  <!-- Landing Page Animation -->
+  <div id="landing-page">
+    <div class="typing-effect" id="landing-text">
+      Welcome to Cyber HTML Runner
+    </div>
+    <div class="social-icons">
+      <a href="https://codepen.io/CyberNaveen" target="_blank">
+        <img src="https://e7.pngegg.com/pngimages/166/1007/png-clipart-codepen-computer-icons-kaya-scodelario-miscellaneous-celebrities-thumbnail.png" alt="Facebook">
+      </a>
+      <a href="instagram.com/kutty_rolex_naveen/" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Twitter">
+      </a>
+      <a href="https://youtube.com/@kgfhackers" target="_blank">
+        <img src="data:image/png;base64,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" alt="Instagram">
+      </a>
+    </div>
+    <div style="color: white; margin-top: 30px;">
+      <p>Credits: Cyber Bro</p>
+    </div>
+  </div>
   <br>
   <br><br>
   <br>
@@ -222,19 +318,7 @@
     <button id="downloadBtn">Download PDF</button>
   </div>
   <br>
-  <h3>MORE INFORMATION AND JOIN OUR SOCIAL PLATFORMS</h3>
-<br>
 
-<h3>Image to PDF Converter with Preview</h3>
-<!--   profile-->
-
-
-<div class="container">
-  <!-- Admin profile and typing effect -->
-  <div class="admin-profile">
-    <img src="https://lh3.googleusercontent.com/a/ACg8ocK6JzV4rskY0NivhZKbyJUCb1MNTT1cEYYV05PxE9U-KH2YhMFT=s288-c-no" alt="Cyber Bro" class="profile-img">
-    <h3 class="typing-effect">Cyber Bro</h3>
-  </div>
   
   <!-- Social media icons -->
   <div class="social-icons">
@@ -258,7 +342,7 @@
 
 
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
   <script>
     const { jsPDF } = window.jspdf;
 
@@ -271,37 +355,38 @@
         alert("Please select images to convert!");
         return;
       }
-    
-      const loader = document.getElementById("loader");
+
       const progressContainer = document.getElementById("progressContainer");
       const progressBar = document.getElementById("progressBar");
       const progressText = document.getElementById("progressText");
       const downloadBtn = document.getElementById("downloadBtn");
-    
-      loader.style.display = "block";
-      progressContainer.style.display = "block";
-    
+      const gifContainer = document.getElementById("gifContainer");
+
+      progressContainer.style.display = "block"; // Show progress container
+      gifContainer.style.display = "block"; // Show the gif container
+
       // Clear preview container for new files
       previewContainer.innerHTML = '';
-    
+
       let progress = 0;
-    
+
+      // Animate progress bar from 0 to 100 in 10 seconds
       const interval = setInterval(() => {
         progress += 10;
         progressBar.style.width = `${progress}%`;
         progressText.innerText = `${progress}%`;
-    
+
         if (progress === 100) {
           clearInterval(interval);
-          loader.style.display = "none";
           alert("Conversion Complete!");
-          downloadBtn.style.display = "block";
+          downloadBtn.style.display = "block"; // Show download button
+          gifContainer.style.display = "none"; // Hide the gif after completion
         }
       }, 1000);
-    
+
       // Create a PDF with images
       const pdf = new jsPDF();
-    
+
       // Loop through files and add images to the PDF
       Array.from(files).forEach((file, index) => {
         const reader = new FileReader();
@@ -314,102 +399,59 @@
             previewImg.src = e.target.result;
             previewImg.classList.add("preview-image");
             previewContainer.appendChild(previewImg);
-    
-            // Set the background color for the page (optional)
-            pdf.setFillColor(255, 255, 255);  // White background (change the RGB values as needed)
-            pdf.rect(0, 0, 210, 297, 'F');  // Full-page rectangle to cover background (A4 size: 210x297 mm)
-    
-            // Maintain aspect ratio for the image
-            const imgWidth = img.width;
-            const imgHeight = img.height;
-    
-            const pageWidth = 210;  // A4 width in mm
-            const pageHeight = 297; // A4 height in mm
-            const maxWidth = 180;   // Maximum image width
-            const maxHeight = 160;  // Maximum image height
-    
-            // Calculate aspect ratio
-            let width = maxWidth;
-            let height = (imgHeight / imgWidth) * width;
-    
-            if (height > maxHeight) {
-              height = maxHeight;
-              width = (imgWidth / imgHeight) * height;
-            }
-    
-            // Add image to PDF
+
             if (index > 0) {
-              pdf.addPage();  // Add new page for subsequent images
+              pdf.addPage();
             }
-    
-            pdf.addImage(img, 'JPEG', 10, 10, width, height); // Add image with aspect ratio maintained
+            pdf.addImage(img, 'JPEG', 10, 10, 180, 160);  // Adjust the width, height, and position as needed
           };
           img.src = e.target.result;
         };
         
         reader.readAsDataURL(file);
       });
-    
+
       // Trigger PDF download when clicked
       downloadBtn.addEventListener("click", () => {
         pdf.save("cyberbro.pdf");
       });
     });
-    //profile//
-    // JavaScript for voice alert, typing effect, and blur functionality
-let clickedIcon = null;
+    //landingpage//
+     // Hide the landing page after 20 seconds
+     setTimeout(() => {
+      document.getElementById('landing-page').classList.add('hidden');
+    }, 20000);
 
-document.querySelectorAll('.social-icons .icon').forEach(icon => {
-  icon.addEventListener('click', function () {
-    // Show the username of the clicked icon
-    const username = this.getAttribute('data-username');
-    document.querySelector('.username-display').textContent = `Username: ${username}`;
+    // Looping Typing Effect
+    const texts = [
+      "Welcome to Cyber image to pdf convetor",
+      "for free😍","wait a moment until open"
+    ];
+    let currentText = 0;
+    let typingEffect = document.getElementById('landing-text');
 
-    // Speak out the username
-    const voice = new SpeechSynthesisUtterance(`Cyber Bro. Username: ${username}`);
-    window.speechSynthesis.speak(voice);
-
-    // Only apply blur if no icon has been clicked yet
-    if (!clickedIcon) {
-      clickedIcon = this;  // Store the clicked icon for reference
-      // Blur all other icons
-      document.querySelectorAll('.social-icons .icon').forEach(icon => {
-        if (icon !== this) {
-          icon.style.filter = 'blur(5px)';
-          icon.style.pointerEvents = 'none'; // Disable hover and click for blurred icons
+    function startTypingEffect() {
+      typingEffect.innerHTML = "";
+      let currentLetter = 0;
+      let text = texts[currentText];
+      typingEffect.style.animation = 'none'; // Reset animation
+      typingEffect.offsetHeight; // Trigger reflow
+      typingEffect.style.animation = 'typing 4s steps(40) 1s forwards, blink .75s step-end infinite'; // Restart animation
+      let typingInterval = setInterval(function() {
+        typingEffect.innerHTML += text.charAt(currentLetter);
+        currentLetter++;
+        if (currentLetter === text.length) {
+          clearInterval(typingInterval);
+          setTimeout(function() {
+            currentText = (currentText + 1) % texts.length;
+            startTypingEffect(); // Restart the typing effect with the next text
+          }, 1500); // Wait before starting the next text
         }
-      });
+      }, 100);
     }
 
-    // Disable hover effect on clicked icon (no loop, it's a one-time effect)
-    this.style.pointerEvents = 'auto';
-  });
-});
-
-// Looping Typing effect for admin profile name
-const typingEffect = document.querySelector('.typing-effect');
-const text = typingEffect.textContent;
-typingEffect.textContent = '';
-let i = 0;
-
-function typeWriter() {
-  if (i < text.length) {
-    typingEffect.textContent += text.charAt(i);
-    i++;
-    setTimeout(typeWriter, 100);
-  } else {
-    // Reset typing effect after finishing
-    setTimeout(() => {
-      typingEffect.textContent = ''; // Clear text
-      i = 0; // Reset index
-      typeWriter(); // Start typing again
-    }, 1000); // Wait for 1 second before restarting
-  }
-}
-
-window.onload = () => typeWriter(); // Start typing effect when the page loads
-//recapcha//
- 
+    startTypingEffect(); // Start the typing effect when the page loads
+  
   </script>
 
 </html>
